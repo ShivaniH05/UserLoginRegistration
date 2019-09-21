@@ -14,9 +14,9 @@ How to run the User Registration & Login and User Management System With Admin p
 
 6. Import loginsystem.sql file(given inside the zip package in SQL file folder)
 
-7.Run the script http://localhost:<yourPort>/userloginregistration/user/
+7.Run the script http://localhost:< yourPort>/userloginregistration/user/
 
-8. For admin Panel http://localhost:<yourPort>/userloginregistration/admin/
+8. For admin Panel http://localhost:< yourPort>/userloginregistration/admin/
 
 Credential for admin panel :
 
