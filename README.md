@@ -23,7 +23,3 @@ Credential for admin panel :
 Username: admin
 Password: admin
 
-Credential for user panel : 
-
-Username: shivanimistry675@gmail.com 
-Password : UShivani@123
