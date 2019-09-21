@@ -13,7 +13,9 @@ if(isset($_POST['signup']))
 	$contact=$_POST['contact'];
 	if($password==$cpassword){
 		$enc_password=md5($password);
-		$msg=mysqli_query($con,"insert into users(fname,lname,email,password,contactno) values('$fname','$lname','$email','$enc_password','$contact')");	
+		try{
+		$msg=mysqli_query($con,"insert into users(fname,lname,email,password,contactno,last_login) values('$fname','$lname','$email','$enc_password','$contact',NOW())");
+		echo $msg;
 		if($msg)
 		{
 			echo "<script>alert('Register successfully');</script>";
@@ -23,6 +25,13 @@ if(isset($_POST['signup']))
 			$password="";
 			$cpassword="";
 			$contact="";
+		}
+		else{
+			echo "<script>alert('Something went wrong');</script>";
+		}
+		}catch (Exception $e)
+		{
+			echo "<script>alert('Something went wrong');</script>";
 		}
 	}
 	else{
@@ -34,7 +43,7 @@ if(isset($_POST['signup']))
 // Code for login 
 if(isset($_POST['login']))
 {
-$password=$_POST['password'];
+$password=$_POST['lpassword'];
 $dec_password=md5($password);
 $useremail=$_POST['uemail'];
 $ret= mysqli_query($con,"SELECT * FROM users WHERE email='$useremail' and password='$dec_password'");
@@ -86,7 +95,7 @@ echo "<script>alert('Email not register with us');</script>";
 //Remember Me functionality for login 
 if(!empty($_POST["remember"])) {
 	setcookie ("uemail",$_POST["uemail"],time()+ 3600);
-	setcookie ("password",$_POST["password"],time()+ 3600);
+	setcookie ("password",$_POST["lpassword"],time()+ 3600);
 	echo "Cookies Set Successfuly";
 } else {
 	setcookie("uemail","");
@@ -126,12 +135,7 @@ if(!empty($_POST["remember"])) {
 <body>
 <div class="main">
 		<h1>Registration and Login System</h1>
-		<div id="wrapper">
-		  <div id="container">
-			<div><input id="button" type="button" value="click here to visit admin page" onClick="parent.location='http://localhost/UserLoginRegi/Admin-User-Login-Regis/admin/index.php'"></div>
-		 </div>
-		  <div class="clear"> </div>
-		</div>
+		
 	 <div class="sap_tabs">	
 			<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
 			  <ul class="resp-tabs-list">
@@ -180,7 +184,7 @@ if(!empty($_POST["remember"])) {
 							<form name="login" action="" method="post">
 								<input type="text" class="text" name="uemail"  value="<?php if(isset($_COOKIE["uemail"])) { echo $_COOKIE["uemail"]; } ?>" placeholder="Enter your registered email"  ><a href="#" class=" icon email"></a>
 										
-								<input type="password" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>" name="password" placeholder="Enter valid password"><a href="#" class=" icon lock"></a>
+								<input type="password" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>" name="lpassword" placeholder="Enter valid password"><a href="#" class=" icon lock"></a>
 						
 								<div class="p-container">
 									<div>
